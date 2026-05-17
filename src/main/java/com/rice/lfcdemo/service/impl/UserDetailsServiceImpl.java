@@ -33,6 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // todo 用户权限信息
         ArrayList<String> list = new ArrayList<>();
+        list.add("admin");
         return new LoginUser(user, list);
 
     }
