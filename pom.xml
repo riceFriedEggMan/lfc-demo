@@ -11,10 +11,16 @@
 	<groupId>com.rice</groupId>
 	<artifactId>lfc-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lfc-demo</name>
+    <packaging>pom</packaging>
+    <name>lfc-demo</name>
 	<description>lfc-demo</description>
+    <modules>
+        <module>framewrk</module>
+		<module>blog</module>
+		<module>admin</module>
+	</modules>
 
-	<properties>
+    <properties>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
