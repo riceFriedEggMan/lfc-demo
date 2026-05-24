@@ -58,6 +58,10 @@ public class ResponseResult<T> implements Serializable {
         return new ResponseResult(200, "OK");
     }
 
+    public static ResponseResult ok(Object date) {
+        return new ResponseResult(200, "OK", date);
+    }
+
 
 
 

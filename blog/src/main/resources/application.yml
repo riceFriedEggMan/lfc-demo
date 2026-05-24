@@ -1,5 +1,5 @@
 spring:
   application:
-    name: lfc-demo
+    name: blog
   profiles:
     active: dev
