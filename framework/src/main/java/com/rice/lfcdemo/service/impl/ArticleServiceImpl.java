@@ -139,4 +139,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         return ResponseResult.ok(hotArticleVos);
     }
+
+    @Override
+    public ResponseResult deleteArticle(Long id) {
+        Article article = getById(id);
+        if (Objects.isNull(article)) {
+            return ResponseResult.errorResult(404, "文章不存在");
+        }
+        // 删除Redis中的浏览量缓存
+        redisCache.deleteCacheMapValue("article:viewCount", id.toString());
+        // 删除文章
+        removeById(id);
+        return ResponseResult.ok();
+    }
 }

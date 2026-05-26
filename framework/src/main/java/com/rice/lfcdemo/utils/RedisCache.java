@@ -75,4 +75,8 @@ public class RedisCache {
     public void setCacheMapValue(String key, String hKey, Long viewCount) {
         redisTemplate.boundHashOps(key).increment(hKey, viewCount);
     }
+
+    public void deleteCacheMapValue(String key, String hashKey) {
+        redisTemplate.opsForHash().delete(key, hashKey);
+    }
 }

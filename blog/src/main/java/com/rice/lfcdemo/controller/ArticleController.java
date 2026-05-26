@@ -63,4 +63,16 @@ public class ArticleController {
         return articleService.articleList(pageNum, pageSize, categoryId);
     }
 
+    @DeleteMapping("/{id}")
+    @Operation(summary = "删除文章")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "删除成功"),
+            @ApiResponse(responseCode = "401", description = "未登录"),
+            @ApiResponse(responseCode = "403", description = "无权限"),
+            @ApiResponse(responseCode = "404", description = "文章不存在")
+    })
+    public ResponseResult deleteArticle(@PathVariable(value = "id") Long id) {
+        return articleService.deleteArticle(id);
+    }
+
 }
