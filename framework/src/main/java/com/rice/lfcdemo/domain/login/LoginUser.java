@@ -1,7 +1,6 @@
-package com.rice.lfcdemo.domain.Login;
+package com.rice.lfcdemo.domain.login;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.rice.lfcdemo.entity.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;

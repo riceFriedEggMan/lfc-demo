@@ -1,20 +1,15 @@
 package com.rice.lfcdemo.filter;
 
-import com.rice.lfcdemo.config.SecurityConfig;
-import com.rice.lfcdemo.domain.Login.LoginUser;
+import com.rice.lfcdemo.domain.login.LoginUser;
 import com.rice.lfcdemo.utils.JwtUtils;
 import com.rice.lfcdemo.utils.RedisCache;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
-import io.netty.util.internal.StringUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

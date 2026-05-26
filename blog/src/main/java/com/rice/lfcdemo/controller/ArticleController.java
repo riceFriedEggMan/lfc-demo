@@ -1,23 +1,65 @@
 package com.rice.lfcdemo.controller;
 
+
+
+import com.rice.lfcdemo.domain.blog.Dto.AddArticleDto;
 import com.rice.lfcdemo.domain.ResponseResult;
-import com.rice.lfcdemo.entity.vo.ArticleVo;
 import com.rice.lfcdemo.service.ArticleService;
+
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/article")
+@Tag(name = "01-文章管理", description = "文章的增删改查接口")
 public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
 
+    @PostMapping("add")
+    @Operation(summary = "添加文章")
+    public ResponseResult add(@RequestBody AddArticleDto articleDto){
+        return articleService.add(articleDto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseResult getArticleDetail(@PathVariable(value = "id") Long id){
+        return articleService.getArticleDetail(id);
+    }
+
+    @PutMapping("/updateViewCount/{id}")
+    public ResponseResult updateViewCount(@PathVariable(value = "id") Long id){
+        return articleService.updateViewCount(id);
+    }
+
+    @GetMapping("/hotArticles")
+    public ResponseResult hotArticles(){
+        return articleService.hotArticles();
+    }
+
     @GetMapping("articleList")
-    public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+    @Operation(summary = "获取文章列表", description = "支持分页查询和按分类筛选")
+    @Parameters({
+            @Parameter(name = "pageNum", description = "页码", example = "1", required = false),
+            @Parameter(name = "pageSize", description = "每页条数", example = "10", required = false),
+            @Parameter(name = "categoryId", description = "分类ID", example = "10", required = false)
+    })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "查询成功"),
+            @ApiResponse(responseCode = "401", description = "未登录"),
+            @ApiResponse(responseCode = "403", description = "无权限")
+    })
+    public ResponseResult articleList(Integer pageNum,
+                                      Integer pageSize,
+                                      Long categoryId) {
         return articleService.articleList(pageNum, pageSize, categoryId);
     }
 

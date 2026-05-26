@@ -14,6 +14,9 @@ public class ResponseResult<T> implements Serializable {
 
     private T date;
 
+    public ResponseResult() {
+    }
+
     public ResponseResult(Integer code, T date) {
         this.code = code;
         this.date = date;
@@ -28,6 +31,12 @@ public class ResponseResult<T> implements Serializable {
         this.code = code;
         this.message = message;
         this.date = date;
+    }
+
+    public ResponseResult<?> error(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+        return this;
     }
 
     public Integer getCode() {
@@ -62,7 +71,10 @@ public class ResponseResult<T> implements Serializable {
         return new ResponseResult(200, "OK", date);
     }
 
-
+    public static ResponseResult errorResult(int code, String message) {
+        ResponseResult result = new ResponseResult();
+        return result.error(code, message);
+    }
 
 
 }

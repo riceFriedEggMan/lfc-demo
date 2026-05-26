@@ -2,6 +2,7 @@ package com.rice.lfcdemo.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
@@ -62,5 +63,16 @@ public class RedisCache {
         return redisTemplate.opsForSet().members(key);
     }
 
+    public <T> T getCacheMapValue(final String key, final String hashKey) {
+        HashOperations<String, String, T> hashOperations = redisTemplate.opsForHash();
+        return hashOperations.get(key, hashKey);
+    }
 
+    public long incrementCacheMapValue(final String key, final String hashKey, long v) {
+        return redisTemplate.boundHashOps(key).increment(hashKey, v);
+    }
+
+    public void setCacheMapValue(String key, String hKey, Long viewCount) {
+        redisTemplate.boundHashOps(key).increment(hKey, viewCount);
+    }
 }

@@ -4,7 +4,10 @@ import java.util.Date;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,41 +24,61 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("article")
+@Schema(description = "文章信息表")
 public class Article  {
-@TableId
+    @TableId
+    @Schema(description = "文章ID", example = "1")
     private Long id;
 
-    //标题
+    @Schema(description = "标题", example = "Spring Boot入门教程", required = true)
     private String title;
-    //文章内容
+
+    @Schema(description = "文章内容", required = true)
     private String content;
-    //文章摘要
+
+    @Schema(description = "文章摘要", example = "本文介绍Spring Boot的基本使用方法...")
     private String summary;
-    //所属分类id
+
+    @Schema(description = "所属分类ID", example = "10", required = true)
     private Long categoryId;
+
     @TableField(exist = false)
+    @Schema(description = "分类名称", example = "技术文章")
     private String categoryName;
-    //缩略图
+
+    @Schema(description = "缩略图URL", example = "/images/2024/01/thumb.jpg")
     private String thumbnail;
-    //是否置顶
+
+    @Schema(description = "是否置顶", allowableValues = {"0", "1"}, example = "0")
     private String isTop;
-    //是否发布（0发布，1草稿）
+
+    @Schema(description = "发布状态", allowableValues = {"0", "1"}, example = "1")
     private String status;
-    //访问量
+
+    @Schema(description = "访问量", example = "1280")
     private Long viewCount;
-    //是否可评论
+
+    @Schema(description = "是否允许评论", allowableValues = {"0", "1"}, example = "1")
     private String isComment;
 
+    @Schema(description = "创建人ID", hidden = true)
+    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
 
+    @Schema(description = "创建时间", example = "2024-01-15 10:30:00", hidden = true)
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
+    @Schema(description = "修改人ID", hidden = true)
+    @TableField(fill = FieldFill.UPDATE)
     private Long updateBy;
 
+    @Schema(description = "修改时间", hidden = true)
+    @TableField(fill = FieldFill.UPDATE)
     private Date updateTime;
-    //0未删除，1已删除
-    private Integer delFlag;
 
+    @Schema(description = "逻辑删除标记", allowableValues = {"0", "1"}, example = "0", hidden = true)
+    private Integer delFlag;
 
 
 }
