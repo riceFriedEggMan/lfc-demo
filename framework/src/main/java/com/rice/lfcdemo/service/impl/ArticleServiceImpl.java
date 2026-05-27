@@ -91,10 +91,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult getArticleDetail(Long id) {
         Article article = getById(id);
 
-        Long viewCount = redisCache.getCacheMapValue("article:viewCount", id.toString());
-        Long count = Optional.ofNullable(viewCount).orElse(0L);
+        Integer viewCount = redisCache.getCacheMapValue("article:viewCount", id.toString());
+        Integer countInteger = Optional.ofNullable(viewCount).orElse(0);
 
-        article.setViewCount(count);
+        article.setViewCount(countInteger.longValue());
 
         ArticleDetailVo detailVo = BeanCopyUtils.copy(article, ArticleDetailVo.class);
 

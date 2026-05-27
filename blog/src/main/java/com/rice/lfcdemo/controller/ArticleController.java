@@ -2,6 +2,7 @@ package com.rice.lfcdemo.controller;
 
 
 
+import com.rice.lfcdemo.annotation.SystemLog;
 import com.rice.lfcdemo.domain.blog.Dto.AddArticleDto;
 import com.rice.lfcdemo.domain.ResponseResult;
 import com.rice.lfcdemo.service.ArticleService;
@@ -31,6 +32,7 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
+    @SystemLog(bussinessName = "查看文章")
     public ResponseResult getArticleDetail(@PathVariable(value = "id") Long id){
         return articleService.getArticleDetail(id);
     }
