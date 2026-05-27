@@ -1,6 +1,7 @@
 package com.rice.lfcdemo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.rice.lfcdemo.domain.ResponseResult;
 import com.rice.lfcdemo.entity.Category;
 
 
@@ -11,5 +12,7 @@ import com.rice.lfcdemo.entity.Category;
  * @since 2026-05-23 19:40:54
  */
 public interface CategoryService extends IService<Category> {
+
+    ResponseResult getCategoryList();
 
 }
