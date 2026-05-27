@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -43,6 +44,10 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ResponseResult logout() {
-        return null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        String userId = loginUser.getUser().getUserId();
+        redisCache.deleteObject("login:" + userId);
+        return ResponseResult.ok();
     }
 }

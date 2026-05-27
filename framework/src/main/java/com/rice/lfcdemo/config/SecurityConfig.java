@@ -63,6 +63,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(authenticationEntryPoint))
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.logout(logout -> logout.disable());
         return http.build();
     }
 
