@@ -26,12 +26,18 @@ public class User  {
 
     //用户名
     private String userName;
+
+    private String nickName;
     //用户密码
     private String password;
     //手机号
     private String phone;
     //用户邮件
     private String email;
+
+    private String sex;
+    // 头像
+    private String avatar;
     //用户状态
     private Integer status;
     //创建时间
