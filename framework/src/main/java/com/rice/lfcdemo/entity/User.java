@@ -3,6 +3,9 @@ package com.rice.lfcdemo.entity;
 import java.util.Date;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,9 +43,11 @@ public class User  {
     private String avatar;
     //用户状态
     private Integer status;
-    //创建时间
+
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
-    //更新时间
+
+    @TableField(fill = FieldFill.UPDATE)
     private Date updateTime;
 
 

@@ -53,7 +53,9 @@ public class SecurityConfig {
                 // 设置会话创建策略为无状态
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/login",
+                        .requestMatchers(
+                                "/user/login",
+                                "/user/registerUser",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
