@@ -15,4 +15,6 @@ public interface LinkService extends IService<Link> {
 
     ResponseResult getAllLinks();
 
+    ResponseResult pageLink(Link link, Integer pageNo, Integer pageSize);
+
 }
