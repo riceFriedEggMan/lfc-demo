@@ -1,4 +1,4 @@
-package com.rice.lfcdemo.domain.blog.Vo;
+package com.rice.lfcdemo.entity.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

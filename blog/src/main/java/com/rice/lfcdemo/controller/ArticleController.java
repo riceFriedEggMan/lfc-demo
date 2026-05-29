@@ -3,7 +3,6 @@ package com.rice.lfcdemo.controller;
 
 
 import com.rice.lfcdemo.annotation.SystemLog;
-import com.rice.lfcdemo.domain.blog.Dto.AddArticleDto;
 import com.rice.lfcdemo.domain.ResponseResult;
 import com.rice.lfcdemo.service.ArticleService;
 
@@ -25,11 +24,7 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @PostMapping("add")
-    @Operation(summary = "添加文章")
-    public ResponseResult add(@RequestBody AddArticleDto articleDto){
-        return articleService.add(articleDto);
-    }
+
 
     @GetMapping("/{id}")
     @SystemLog(bussinessName = "查看文章")
@@ -63,18 +58,6 @@ public class ArticleController {
                                       Integer pageSize,
                                       Long categoryId) {
         return articleService.articleList(pageNum, pageSize, categoryId);
-    }
-
-    @DeleteMapping("/{id}")
-    @Operation(summary = "删除文章")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "删除成功"),
-            @ApiResponse(responseCode = "401", description = "未登录"),
-            @ApiResponse(responseCode = "403", description = "无权限"),
-            @ApiResponse(responseCode = "404", description = "文章不存在")
-    })
-    public ResponseResult deleteArticle(@PathVariable(value = "id") Long id) {
-        return articleService.deleteArticle(id);
     }
 
 }

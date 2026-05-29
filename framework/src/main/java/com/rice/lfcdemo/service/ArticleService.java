@@ -1,10 +1,11 @@
 package com.rice.lfcdemo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.rice.lfcdemo.domain.blog.Dto.AddArticleDto;
-import com.rice.lfcdemo.domain.blog.Vo.ArticleByIdVo;
+import com.rice.lfcdemo.entity.vo.ArticleByIdVo;
 import com.rice.lfcdemo.domain.ResponseResult;
 import com.rice.lfcdemo.entity.Article;
+import com.rice.lfcdemo.entity.dto.ArticleDto;
+import com.rice.lfcdemo.entity.vo.PageVo;
 
 
 /**
@@ -17,7 +18,7 @@ public interface ArticleService extends IService<Article> {
 
     ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId);
 
-    ResponseResult add(AddArticleDto articleDto);
+    ResponseResult add(ArticleDto articleDto);
 
     ArticleByIdVo getInfo(Long id);
 
@@ -28,4 +29,9 @@ public interface ArticleService extends IService<Article> {
     ResponseResult hotArticles();
 
     ResponseResult deleteArticle(Long id);
+
+    PageVo selectArticlePage(Article article, Integer pageNum, Integer pageSize);
+
+    ResponseResult edit(ArticleDto articleDto);
+
 }
