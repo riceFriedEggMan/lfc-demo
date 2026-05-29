@@ -2,12 +2,14 @@ package com.rice.lfcdemo.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rice.lfcdemo.constants.SystemConstants;
 import com.rice.lfcdemo.domain.ResponseResult;
 import com.rice.lfcdemo.entity.Article;
 import com.rice.lfcdemo.entity.Category;
 import com.rice.lfcdemo.entity.vo.CategoryVo;
+import com.rice.lfcdemo.entity.vo.PageVo;
 import com.rice.lfcdemo.mapper.CategoryMapper;
 import com.rice.lfcdemo.service.ArticleService;
 import com.rice.lfcdemo.service.CategoryService;
@@ -15,6 +17,7 @@ import com.rice.lfcdemo.utils.BeanCopyUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -44,5 +47,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
                 .collect(Collectors.toList());
         List<CategoryVo> categoryVos = BeanCopyUtils.copyList(categoryList, CategoryVo.class);
         return ResponseResult.ok(categoryVos);
+    }
+
+    @Override
+    public ResponseResult pageCategory(Integer pageNo, Integer pageSize, Category category) {
+        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(StringUtils.hasText(category.getName()), Category::getName, category.getName());
+        wrapper.eq(StringUtils.hasText(category.getStatus()),Category::getStatus, category.getStatus());
+        Page<Category> page = new Page<>(pageNo, pageSize);
+        page(page, wrapper);
+        PageVo pageVo = new PageVo(page.getRecords(), page.getTotal());
+        return ResponseResult.ok(pageVo);
     }
 }
