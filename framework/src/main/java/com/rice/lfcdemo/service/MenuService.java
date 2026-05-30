@@ -2,6 +2,9 @@ package com.rice.lfcdemo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rice.lfcdemo.entity.Menu;
+import com.rice.lfcdemo.entity.vo.MenuTreeVo;
+
+import java.util.List;
 
 
 /**
@@ -12,4 +15,11 @@ import com.rice.lfcdemo.entity.Menu;
  */
 public interface MenuService extends IService<Menu> {
 
+    List<Menu> selectMenuList(Menu menu);
+
+    boolean hasChild(Long menuId);
+
+    List<MenuTreeVo> buildMenuTreeList(List<Menu> menus);
+
+    List<Long> selectMenuListByRoleId(Long roleId);
 }
