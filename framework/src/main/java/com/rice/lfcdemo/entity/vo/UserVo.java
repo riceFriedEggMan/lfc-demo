@@ -1,31 +1,19 @@
-package com.rice.lfcdemo.entity;
-
-import java.util.Date;
-
-import java.io.Serializable;
+package com.rice.lfcdemo.entity.vo;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-/**
- * 用户表(User)表实体类
- *
- * @author makejava
- * @since 2026-05-09 09:07:30
- */
-@SuppressWarnings("serial")
+
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("user")
-public class User  {
-    //用户id@TableId
-    @TableId
-    private long userId;
+public class UserVo {
+
+    private Long userId;
 
     //用户名
     private String userName;
@@ -44,15 +32,8 @@ public class User  {
     //用户状态
     private Integer status;
 
-    @TableField(fill = FieldFill.INSERT)
+
     private Date createTime;
 
-    @TableField(fill = FieldFill.UPDATE)
     private Date updateTime;
-
-    @TableField(exist = false)
-    private Long[] roleIds;
-
-
-
 }

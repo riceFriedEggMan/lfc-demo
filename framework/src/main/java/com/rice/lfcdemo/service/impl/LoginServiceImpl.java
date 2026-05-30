@@ -32,10 +32,10 @@ public class LoginServiceImpl implements LoginService {
 
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
 
-        String userId = loginUser.getUser().getUserId();
+        Long userId = loginUser.getUser().getUserId();
 
-        // todo 获取jwt，用户信息保存至redis
-        String jwt = JwtUtils.createJWT(userId);
+        // 获取jwt，用户信息保存至redis
+        String jwt = JwtUtils.createJWT(String.valueOf(userId));
         redisCache.setCacheObject("login:" + userId, loginUser);
         HashMap<Object, Object> map = new HashMap<>();
         map.put("token", jwt);
@@ -46,7 +46,7 @@ public class LoginServiceImpl implements LoginService {
     public ResponseResult logout() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        String userId = loginUser.getUser().getUserId();
+        Long userId = loginUser.getUser().getUserId();
         redisCache.deleteObject("login:" + userId);
         return ResponseResult.ok();
     }

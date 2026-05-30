@@ -20,4 +20,16 @@ public interface UserService extends IService<User> {
     ResponseResult registerUser(User user);
 
 
+    ResponseResult pageList(User user, Integer pageNum, Integer pageSize);
+
+    boolean checkUserNameUnique(String userName);
+
+    boolean checkPhoneUnique(User user);
+
+    boolean checkEmailUnique(User user);
+
+    ResponseResult addUser(User user);
+
+    ResponseResult edit(User user);
+
 }

@@ -11,4 +11,7 @@ public class SystemConstants {
     public static final String LINK_COMMENT = "1";
 
     public static final String  LINK_STATUS_NORMAL = "0";
+
+    public static final String NORMAL = "0";
+
 }
