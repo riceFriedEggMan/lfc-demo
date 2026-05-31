@@ -31,7 +31,7 @@ public class MenuController {
         return ResponseResult.ok();
     }
 
-    @GetMapping("/{menuId")
+    @GetMapping("/{menuId}")
     public ResponseResult getInfo(@PathVariable Long menuId) {
         return ResponseResult.ok(menuService.getById(menuId));
     }

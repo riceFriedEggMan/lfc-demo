@@ -9,4 +9,37 @@
             where m.role_id = #{roleId}
             order by m.parent_id, m.order_num
     </select>
+    <select id="selectPermsByUserId" resultType="java.lang.String">
+         select distinct m.perms
+                 from sys_user_role sur
+                 left join sys_role_menu srm on sur.role_id = srm.role_id
+                 left join menu m on srm.menu_id = menu.id
+                 where
+                     sur.user_id = #{userId} AND
+                     m.menu_type in ('C', 'M') AND
+                     m.status = 0 AND
+                     m.del_flag = 0
+    </select>
+    <select id="selectRouterMenuTreeByUserId" resultType="com.rice.lfcdemo.entity.Menu">
+        select DISTINCT m.id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, IFNULL(m.perms,'') AS perms, m.is_frame,  m.menu_type, m.icon, m.order_num, m.create_time
+                 from sys_user_role sur
+                          left join sys_role_menu srm on sur.role_id = srm.role_id
+                          left join menu m on srm.menu_id = menu.id
+                 where
+                     sur.user_id = #{userId} AND
+                     m.menu_type in ('C', 'M') AND
+                     m.status = 0 AND
+                     m.del_flag = 0
+    </select>
+    <select id="selectAllRouterMenu" resultType="com.rice.lfcdemo.entity.Menu">
+        select DISTINCT m.id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, IFNULL(m.perms,'') AS perms, m.is_frame,  m.menu_type, m.icon, m.order_num, m.create_time
+        from sys_user_role sur
+                 left join sys_role_menu srm on sur.role_id = srm.role_id
+                 left join menu m on srm.menu_id = menu.id
+        where
+            m.menu_type in ('C', 'M') AND
+            m.status = 0 AND
+            m.del_flag = 0
+
+    </select>
 </mapper>

@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface RoleMapper extends BaseMapper<Role> {
     List<Long> selectRoleIdByUserId(Long id);
+
+    List<String> selectPermsByUserId(long userId);
 }

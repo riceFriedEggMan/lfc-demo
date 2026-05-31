@@ -22,4 +22,8 @@ public interface MenuService extends IService<Menu> {
     List<MenuTreeVo> buildMenuTreeList(List<Menu> menus);
 
     List<Long> selectMenuListByRoleId(Long roleId);
+
+    List<String> selectPermsByUserId(long userId);
+
+    List<Menu> selectRouterMenuTreeByUserId(Long userId);
 }

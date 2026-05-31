@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,6 +77,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         updateById(role);
         sysRoleMenuService.deletRoleMenuByRoleId(role.getId());
         insertMenu(role);
+    }
+
+    @Override
+    public List<String> selectRoleKeyByUserId(long userId) {
+        if(userId == 1L){
+            List<String> roleKeys = new ArrayList<>();
+            roleKeys.add("admin");
+            return roleKeys;
+        }
+        return getBaseMapper().selectPermsByUserId(userId);
     }
 
     private void insertMenu(Role role) {

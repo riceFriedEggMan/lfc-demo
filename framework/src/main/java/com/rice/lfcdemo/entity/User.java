@@ -24,7 +24,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @TableName("user")
 public class User  {
     //用户id@TableId
-    @TableId
     private long userId;
 
     //用户名

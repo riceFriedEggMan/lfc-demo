@@ -9,4 +9,12 @@
                 on ur.role_id = r.id
                   where ur.user_id = #{userId}
     </select>
+    <select id="selectPermsByUserId" resultType="java.lang.String">
+        select r.role_key
+        from sys_user_role sur
+        left join role r on sur.role_id = r.id
+        where sur.user_id = #{userId} AND
+            r.`status` = 0 AND
+            r.`del_flag` = 0
+    </select>
 </mapper>
