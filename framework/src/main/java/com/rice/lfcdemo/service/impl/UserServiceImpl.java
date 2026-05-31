@@ -118,7 +118,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setPassword(encode);
         save(user);
 
-        // todo 增加角色
+        // 增加角色
         Long[] roleIds = user.getRoleIds();
         if (roleIds != null && roleIds.length > 0) {
             insertRoles(user);

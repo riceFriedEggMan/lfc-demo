@@ -82,7 +82,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Article article = BeanCopyUtils.copy(articleDto, Article.class);
         this.save(article);
 
-        // todo 增加标签
+        // 增加标签
         List<Long> tags = articleDto.getTags();
         List<ArticleTag> articleTagList = tags.stream()
                 .map(tag -> new ArticleTag(article.getId(), tag)).collect(Collectors.toList());
