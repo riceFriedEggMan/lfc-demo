@@ -19,8 +19,8 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping("/list")
-    public ResponseResult list(Menu menu) {
-        List<Menu> menuList = menuService.selectMenuList(menu);
+    public ResponseResult list() {
+        List<Menu> menuList = menuService.selectMenuList(new Menu());
         List<MenuVo> menuVos = BeanCopyUtils.copyList(menuList, MenuVo.class);
         return ResponseResult.ok(menuVos);
     }

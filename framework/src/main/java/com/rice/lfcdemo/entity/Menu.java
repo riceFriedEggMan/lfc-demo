@@ -61,6 +61,7 @@ public class Menu  {
     private String remark;
 
     private String delFlag;
+
     @TableField(exist = false)
     List<Menu> children;
 

@@ -9,7 +9,7 @@ public class UserInfoVo {
     /**
      * 主键
      */
-    private String userId;
+    private Long userId;
 
     /**
      * 昵称
