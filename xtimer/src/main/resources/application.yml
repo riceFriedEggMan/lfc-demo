@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: xtimer
+  profiles:
+    active: dev

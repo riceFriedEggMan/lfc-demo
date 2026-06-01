@@ -12,8 +12,9 @@
         <result column="cron"  property="cron"/>
         <result column="notify_http_param"  property="notifyHttpParam"/>
     </resultMap>
-    <insert id="save">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="timerId">
         insert into xtimer (`app`, `name`, `status`, `cron`, `notify_http_param`)
-        values (#{timerModel.app},#{timerModel.name},#{timerModel.status},#{timerModel.cron},#{timerModel.notifyHttpParam});
+        values (#{app},#{name},#{status},#{cron},#{notifyHttpParam});
     </insert>
 </mapper>

@@ -10,6 +10,7 @@ import com.rice.lfcdemo.model.BaseModel;
 import com.rice.lfcdemo.utils.JSONUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -21,6 +22,7 @@ import org.springframework.beans.BeanUtils;
  * @author makejava
  * @since 2026-06-01 15:08:19
  */
+@EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
 @Data
 @AllArgsConstructor
@@ -29,11 +31,6 @@ import org.springframework.beans.BeanUtils;
 public class Xtimer extends BaseModel {
 
     private Long timerId;
-
-    //创建时间
-    private Date createTime;
-    //更新时间
-    private Date modifyTime;
     //app
     private String app;
     //name
@@ -75,9 +72,4 @@ public class Xtimer extends BaseModel {
         BeanUtils.copyProperties(xtimer, timerDTO);
         return timerDTO;
     }
-
-
-
-
-
 }
