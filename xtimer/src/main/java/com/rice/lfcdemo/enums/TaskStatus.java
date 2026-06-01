@@ -1,4 +1,4 @@
-package enums;
+package com.rice.lfcdemo.enums;
 
 public enum TaskStatus {
     NotRun(0),

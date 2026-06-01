@@ -19,6 +19,7 @@
 		<module>blog</module>
 		<module>admin</module>
 		<module>xtimer</module>
+		<module>common</module>
 	</modules>
 
 
