@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rice.lfcdemo.mapper.XtimerMapper">
+
+    <resultMap id="timer" type="com.rice.lfcdemo.entity.Xtimer">
+        <result column="timer_id" property="timerId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time"  property="modifyTime"/>
+        <result column="app"  property="app"/>
+        <result column="name"  property="name"/>
+        <result column="status"  property="status"/>
+        <result column="cron"  property="cron"/>
+        <result column="notify_http_param"  property="notifyHttpParam"/>
+    </resultMap>
+    <insert id="save">
+        insert into xtimer (`app`, `name`, `status`, `cron`, `notify_http_param`)
+        values (#{timerModel.app},#{timerModel.name},#{timerModel.status},#{timerModel.cron},#{timerModel.notifyHttpParam});
+    </insert>
+</mapper>
