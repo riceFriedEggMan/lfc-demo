@@ -16,7 +16,8 @@ import java.util.TimerTask;
 public class ReentrantDistributeLock {
     @Autowired
     private RedisBase redisBase;
-    private RedisScript<Long> expireLockScript;
+
+    private Timer watchDog;
 
     public boolean lock(String key, String token, long expireSeconds) {
         Object res = redisBase.get(key);
@@ -42,13 +43,13 @@ public class ReentrantDistributeLock {
             return false;
         }
 
-        Timer dog = new Timer("dog");
+        watchDog = new Timer("dog");
         TimerTask timerTask = new TimerTask() {
             public void run() {
                 expireLock(key, token, expireSeconds);
             }
         };
-        dog.scheduleAtFixedRate(timerTask, 0, (expireSeconds / 3) * 1000);
+        watchDog.scheduleAtFixedRate(timerTask, 0, (expireSeconds / 3) * 1000);
         return ok;
     }
 
@@ -62,12 +63,22 @@ public class ReentrantDistributeLock {
     }
 
     public void unlock(String key, String token) {
+        stopWatchDog();
         Long executeLua = redisBase.executeLua(getUnlockScript(), Arrays.asList(key), token, null);
         if (executeLua.longValue() == 1){
             log.info("unlock fail");
         }else if (executeLua.longValue() == 0){
             log.info("unlock success");
         }
+    }
+
+    private void stopWatchDog() {
+        if (watchDog != null) {
+            watchDog.cancel();
+            watchDog.purge();
+            watchDog = null;
+        }
+
     }
 
     private RedisScript<Long> getUnlockScript() {
