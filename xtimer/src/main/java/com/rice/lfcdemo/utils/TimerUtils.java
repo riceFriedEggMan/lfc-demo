@@ -3,6 +3,7 @@ package com.rice.lfcdemo.utils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.quartz.CronExpression;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,5 +43,11 @@ public class TimerUtils {
 
     public static String GetEnableLockKey(String app){
         return "enable_timer_lock_"+app;
+    }
+
+    public static String GetMigratorLockKey(Date startHour) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+        String date = sdf.format(startHour);
+        return "migrator_lock_" + date;
     }
 }

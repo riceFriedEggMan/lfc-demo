@@ -3,6 +3,8 @@ package com.rice.lfcdemo.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.rice.lfcdemo.entity.Xtimer;
 
+import java.util.List;
+
 
 /**
  * Timer 信息(Xtimer)表数据库访问层
@@ -17,4 +19,6 @@ public interface XtimerMapper extends BaseMapper<Xtimer> {
     Xtimer getTimerById(Long timerId);
 
     void update(Xtimer xtimer);
+
+    List<Xtimer> getXtimerByStatus(int status);
 }

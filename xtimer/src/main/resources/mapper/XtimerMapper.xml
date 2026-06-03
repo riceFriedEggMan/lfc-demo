@@ -37,7 +37,10 @@
             </if>
         </set>
     </update>
-    <select id="getTimerById" resultType="com.rice.lfcdemo.entity.Xtimer">
+    <select id="getTimerById" resultMap="timer">
         select * from xtimer where timer_id = #{timerId}
+    </select>
+    <select id="getXtimerByStatus" resultMap="timer">
+        select * from xtimer where status = #{status}
     </select>
 </mapper>
