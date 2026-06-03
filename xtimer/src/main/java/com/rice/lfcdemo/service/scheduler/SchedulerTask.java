@@ -2,6 +2,7 @@ package com.rice.lfcdemo.service.scheduler;
 
 import com.rice.lfcdemo.common.conf.SchedulerAppConf;
 import com.rice.lfcdemo.redis.ReentrantDistributeLock;
+import com.rice.lfcdemo.service.trigger.TriggerWorker;
 import com.rice.lfcdemo.utils.TimerUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class SchedulerTask {
     private ReentrantDistributeLock reentrantDistributeLock;
     @Autowired
     private SchedulerAppConf schedulerAppConf;
+    @Autowired
+    private TriggerWorker triggerWorker;
 
     @Async("schedulerPool")
     public void asyncHandleSlice(Date time, int bucketId) {
@@ -35,11 +38,11 @@ public class SchedulerTask {
         log.info("get scheduler lock success, key: %s", TimerUtils.GetTimeBucketLockKey(time, bucketId));
 
         // 触发器执行
-
-//        reentrantDistributeLock.expireLock(
-//                TimerUtils.GetTimeBucketLockKey(time, bucketId),
-//                value,
-//                schedulerAppConf.getSuccessExpireSeconds());
+        triggerWorker.work(TimerUtils.GetSliceMsgKey(time, bucketId));
+        reentrantDistributeLock.expireLock(
+                TimerUtils.GetTimeBucketLockKey(time, bucketId),
+                value,
+                schedulerAppConf.getSuccessExpireSeconds());
 
         log.info("end executeAsync");
     }

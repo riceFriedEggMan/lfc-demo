@@ -57,4 +57,12 @@ public class TimerUtils {
         String date = sdf.format(time);
         return sb.append("time_bucket_lock_").append(date).append("_").append(bucketId).toString();
     }
+
+    public static String GetSliceMsgKey(Date time, int timerId){
+        StringBuilder sb = new StringBuilder();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String timerStr = sdf.format(time);
+        sb.append(timerStr).append("_").append(timerId);
+        return sb.toString();
+    }
 }
