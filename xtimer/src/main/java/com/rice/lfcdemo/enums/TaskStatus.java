@@ -7,7 +7,7 @@ public enum TaskStatus {
     Failed(3);
 
 
-    private int status;
+    private final int status;
 
     private TaskStatus(int status) {
         this.status = status;

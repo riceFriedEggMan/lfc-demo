@@ -17,4 +17,27 @@
         insert into xtimer (`app`, `name`, `status`, `cron`, `notify_http_param`)
         values (#{app},#{name},#{status},#{cron},#{notifyHttpParam});
     </insert>
+    <update id="update">
+        update xtimer
+        <set>
+            <if test="app != null">
+                app = #{app},
+            </if>
+            <if test="name != null">
+                `name` = #{name},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="cron != null">
+                cron = #{cron},
+            </if>
+            <if test="notifyHttpParam != null">
+                notify_http_param = #{notifyHttpParam}
+            </if>
+        </set>
+    </update>
+    <select id="getTimerById" resultType="com.rice.lfcdemo.entity.Xtimer">
+        select * from xtimer where timer_id = #{timerId}
+    </select>
 </mapper>

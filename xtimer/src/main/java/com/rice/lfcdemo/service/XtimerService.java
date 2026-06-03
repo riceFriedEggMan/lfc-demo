@@ -3,6 +3,7 @@ package com.rice.lfcdemo.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rice.lfcdemo.entity.Xtimer;
 import com.rice.lfcdemo.entity.dto.TimerDTO;
+import com.rice.lfcdemo.model.ResponseEntity;
 
 
 /**
@@ -14,4 +15,6 @@ import com.rice.lfcdemo.entity.dto.TimerDTO;
 public interface XtimerService extends IService<Xtimer> {
 
     Long createTimer(TimerDTO timerDTO);
+
+    ResponseEntity enableXtimer(String app, Long timerId);
 }

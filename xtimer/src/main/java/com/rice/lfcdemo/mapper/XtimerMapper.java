@@ -13,4 +13,8 @@ import com.rice.lfcdemo.entity.Xtimer;
 public interface XtimerMapper extends BaseMapper<Xtimer> {
 
     void save(Xtimer xtimer);
+
+    Xtimer getTimerById(Long timerId);
+
+    void update(Xtimer xtimer);
 }
