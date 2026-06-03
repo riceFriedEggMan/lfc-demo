@@ -50,4 +50,11 @@ public class TimerUtils {
         String date = sdf.format(startHour);
         return "migrator_lock_" + date;
     }
+
+    public static String GetTimeBucketLockKey(Date time, int bucketId){
+        StringBuilder sb = new StringBuilder();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String date = sdf.format(time);
+        return sb.append("time_bucket_lock_").append(date).append("_").append(bucketId).toString();
+    }
 }

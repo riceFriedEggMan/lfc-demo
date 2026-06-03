@@ -53,7 +53,7 @@ public class ReentrantDistributeLock {
         return ok;
     }
 
-    private void expireLock(String key, String token, long expireSeconds) {
+    public void expireLock(String key, String token, long expireSeconds) {
         Long execute = redisBase.executeLua(getExpireLockScript(), Arrays.asList(key), token, expireSeconds);
         if (execute.longValue() == 0) {
             log.info("延期{}失败:{}", key, execute);
