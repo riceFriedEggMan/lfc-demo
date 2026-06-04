@@ -5,8 +5,7 @@ import com.rice.lfcdemo.entity.TaskModel;
 import com.rice.lfcdemo.mapper.TimerTaskMapper;
 import com.rice.lfcdemo.redis.TaskCache;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
+import com.rice.lfcdemo.enums.TaskStatus;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -82,9 +81,20 @@ public class TriggerTimerTask extends TimerTask {
         }
     }
 
-    private List<TaskModel> getTasksByTime(Date tStart, Date date) {
+    private List<TaskModel> getTasksByTime(Date tStart, Date end) {
         List<TaskModel> taskModels = new ArrayList<>();
+
         // 走缓存取数据，没有再走数据库
-        return null;
+        try {
+            taskModels = taskCache.getTasksFromCache(minuteBucketKey, tStart.getTime(), end.getTime());
+        } catch (Exception e) {
+            log.error("getTasksFromCache error: " ,e);
+            try {
+                taskModels = timerTaskMapper.getTasksByTimeRange(tStart.getTime(), end.getTime(), TaskStatus.NotRun.getStatus());
+            } catch (Exception ex) {
+                log.error("getTasksByConditions error: " ,ex);
+            }
+        }
+        return taskModels;
     }
 }

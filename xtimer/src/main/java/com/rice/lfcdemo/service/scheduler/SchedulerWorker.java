@@ -19,7 +19,7 @@ public class SchedulerWorker {
     private SchedulerTask schedulerTask;
 
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1000)
     public void scheduledTask(){
         log.info("任务开始执行时间" + LocalDateTime.now());
         handleSlices();
@@ -35,9 +35,17 @@ public class SchedulerWorker {
         Date now = new Date();
         Date preTime = new Date(now.getTime() - 60000);
 
-        schedulerTask.asyncHandleSlice(preTime, buketId);
+        try {
+            schedulerTask.asyncHandleSlice(preTime, buketId);
+        } catch (Exception e) {
+            log.error("[handle slice] submit nowPreMin task failed, err:",e);
+        }
 
-        schedulerTask.asyncHandleSlice(now, buketId);
+        try {
+            schedulerTask.asyncHandleSlice(now, buketId);
+        } catch (Exception e) {
+            log.error("[handle slice] submit nowPreMin task failed, err:",e);
+        }
 
 
     }

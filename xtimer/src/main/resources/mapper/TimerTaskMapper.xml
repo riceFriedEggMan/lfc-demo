@@ -2,16 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rice.lfcdemo.mapper.TimerTaskMapper">
 
-    
-    <resultMap id="timer" type="com.rice.lfcdemo.entity.Xtimer">
-        <result column="timer_id" property="timerId" />
+
+    <resultMap id="taskMap" type="com.rice.lfcdemo.entity.TaskModel">
+        <result column="task_id" property="taskId" />
         <result column="create_time" property="createTime"/>
         <result column="modify_time"  property="modifyTime"/>
+        <result column="timer_id"  property="timerId"/>
         <result column="app"  property="app"/>
-        <result column="name"  property="name"/>
+        <result column="output"  property="output"/>
+        <result column="run_timer"  property="runTimer"/>
+        <result column="cost_time"  property="costTime"/>
         <result column="status"  property="status"/>
-        <result column="cron"  property="cron"/>
-        <result column="notify_http_param"  property="notifyHttpParam"/>
     </resultMap>
 
     <insert id="batchSave" useGeneratedKeys="true">
@@ -21,6 +22,47 @@
                    (#{taskModel.app},#{taskModel.timerId},#{taskModel.output},#{taskModel.runTimer},#{taskModel.costTime},#{taskModel.status})
                </foreach>
     </insert>
+    <update id="update">
+        update timer_task
+        <set>
+            <if test="app != null">
+                `app` = #{app},
+            </if>
+            <if test="timerId != null">
+                `timer_id` = #{timerId},
+            </if>
+            <if test="output != null">
+                `output` = #{output},
+            </if>
+            <if test="runTimer != null">
+                `run_timer` = #{runTimer},
+            </if>
+            <if test="costTime != null">
+                `cost_time` = #{costTime},
+            </if>
+            <if test="status != null">
+                `status` = #{status},
+            </if>
+        </set>
+        where task_id = #{taskId};
+    </update>
+    <select id="getTasksByTimeRange" resultMap="taskMap">
+        select * from timer_task
+        <where>
+            <if test="startTime != null">
+                and run_timer <![CDATA[>=]]> #{startTime}
+            </if>
+            <if test="endTime != null">
+                and run_timer <![CDATA[<=]]> #{endTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="getTasksByTimerIdUnix" resultType="com.rice.lfcdemo.entity.TaskModel">
+        select * from timer_task where timer_id = #{timerId} and run_timer = #{runTimer}
+    </select>
 
 
 </mapper>

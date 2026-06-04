@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
@@ -54,6 +56,19 @@ public class TriggerWorker {
     }
 
     private Date getStartMinute(String minuteBucketKey) {
-        return null;
+        String[] timeBucket = minuteBucketKey.split("_");
+        if (timeBucket.length != 2) {
+            log.error("TriggerWorker getStartMinute 错误");
+            return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date startMinute = null;
+        try {
+            startMinute = sdf.parse(timeBucket[0]);
+        } catch (ParseException e) {
+            log.error("TriggerWorker getStartMinute 错误");
+
+        }
+        return startMinute;
     }
 }

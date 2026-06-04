@@ -65,4 +65,15 @@ public class TimerUtils {
         sb.append(timerStr).append("_").append(timerId);
         return sb.toString();
     }
+
+    public static List<Long> SplitTimerIDUnix(String timerIDUnixStr) {
+        List<Long> times = new ArrayList<>();
+        String[] split = timerIDUnixStr.split("_");
+        if (split.length != 2) {
+            return times;
+        }
+        times.add(Long.parseLong(split[0]));
+        times.add(Long.parseLong(split[1]));
+        return times;
+    }
 }

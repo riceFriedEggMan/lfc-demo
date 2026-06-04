@@ -16,4 +16,10 @@ import java.util.List;
 public interface TimerTaskMapper extends BaseMapper<TaskModel> {
 
     void batchSave(@Param("taskList") List<TaskModel> taskModels);
+
+    List<TaskModel> getTasksByTimeRange(long startTime, long endTime, int status);
+
+    TaskModel getTasksByTimerIdUnix(Long timerId, Long runTimer);
+
+    void update(TaskModel taskModel);
 }
