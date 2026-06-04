@@ -76,4 +76,8 @@ public class TimerUtils {
         times.add(Long.parseLong(split[1]));
         return times;
     }
+
+    public static String GetWorkerNumKey(){
+        return "worker_num";
+    }
 }

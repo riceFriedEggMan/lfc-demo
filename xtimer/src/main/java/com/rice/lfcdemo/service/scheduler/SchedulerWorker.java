@@ -1,8 +1,10 @@
 package com.rice.lfcdemo.service.scheduler;
 
 import com.rice.lfcdemo.common.conf.SchedulerAppConf;
+import com.rice.lfcdemo.utils.TimerUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,8 @@ public class SchedulerWorker {
     private SchedulerAppConf schedulerAppConf;
     @Autowired
     private SchedulerTask schedulerTask;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
 
     @Scheduled(fixedRate = 1000)
@@ -26,7 +30,11 @@ public class SchedulerWorker {
     }
 
     private void handleSlices() {
-        for (int i = 0; i < schedulerAppConf.getBucketsNum(); i++){
+        int bucketsNumTemp = schedulerAppConf.getBucketsNum();
+        String num = stringRedisTemplate.opsForValue().get(TimerUtils.GetWorkerNumKey());
+        int bucketNumBatch = num == null ? 0 : Integer.parseInt(num);
+        int bucketNums = Math.max(bucketsNumTemp, bucketNumBatch);
+        for (int i = 0; i < bucketNums; i++){
             handleSlice(i);
         }
     }

@@ -15,6 +15,8 @@ public class MigratorAppConf {
     private int migrateTryLockMinutes;
     @Value("${migrator.timerDetailCacheMinutes}")
     private int timerDetailCacheMinutes;
+    @Value("${migrator.batchWorkersNum}")
+    private int batchWorkersNum;
 
     public int getWorkersNum() {
         return workersNum;
@@ -45,5 +47,12 @@ public class MigratorAppConf {
     }
     public void setTimerDetailCacheMinutes(int timerDetailCacheMinutes) {
         this.timerDetailCacheMinutes = timerDetailCacheMinutes;
+    }
+
+    public int getBatchWorkersNum() {
+        return batchWorkersNum;
+    }
+    public void setBatchWorkersNum(int batchWorkersNum) {
+        this.batchWorkersNum = batchWorkersNum;
     }
 }

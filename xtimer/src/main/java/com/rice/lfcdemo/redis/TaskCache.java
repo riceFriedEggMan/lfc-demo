@@ -56,7 +56,12 @@ public class TaskCache {
     }
 
     private String GetTableName(TaskModel taskModel) {
-        int bucketsNum = schedulerAppConf.getBucketsNum();
+        int bucketsNumTemp = schedulerAppConf.getBucketsNum();
+        Integer dynamicNum = (Integer) redisTemplate.opsForValue().get(TimerUtils.GetWorkerNumKey());
+        if (dynamicNum == null) {
+            dynamicNum = 0;
+        }
+        int bucketsNum = Math.max(bucketsNumTemp, dynamicNum);
         StringBuilder sb = new StringBuilder();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String timeStr = sdf.format(new Date(taskModel.getRunTimer()));

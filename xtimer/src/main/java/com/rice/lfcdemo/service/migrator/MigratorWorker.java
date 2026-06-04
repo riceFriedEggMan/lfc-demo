@@ -9,6 +9,7 @@ import com.rice.lfcdemo.redis.ReentrantDistributeLock;
 import com.rice.lfcdemo.utils.TimerUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -30,6 +31,8 @@ public class MigratorWorker {
     private XtimerMapper xtimerMapper;
     @Autowired
     private MigratorManager migratorManager;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Scheduled(fixedRate = 10 * 1000)
     public void work(){
@@ -55,6 +58,12 @@ public class MigratorWorker {
             log.info("xtimer list is empty");
             return;
         }
+        // 根据配置的参数，动态调整桶大小
+        int batchWorkersNum = migratorAppConf.getBatchWorkersNum();
+        int workersNum = xtimerList.size() % batchWorkersNum;
+
+        redisTemplate.opsForValue().set(TimerUtils.GetWorkerNumKey(), workersNum);
+
         for (Xtimer xtimer : xtimerList) {
             migratorManager.migrateTimer(xtimer);
         }

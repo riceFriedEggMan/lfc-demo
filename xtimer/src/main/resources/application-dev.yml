@@ -31,6 +31,7 @@ migrator:
   migrateTryLockMinutes: 1
   migrateSuccessExpireMinutes: 1
   timerDetailCacheMinutes: 2
+  batchWorkersNum: 10
 
 scheduler:
   bucketsNum: 5
