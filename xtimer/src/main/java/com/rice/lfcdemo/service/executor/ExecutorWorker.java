@@ -58,7 +58,7 @@ public class ExecutorWorker {
             log.warn("Timer已经处于去激活状态。 timerId"+timerId);
             return;
         }
-        int gapTime = (int) (new Date().getTime() - taskModel.getRunTimer());
+        long gapTime = Math.max(0, new Date().getTime() - taskModel.getRunTimer());
         taskModel.setCostTime(gapTime);
 
         ResponseEntity<String> res = null;

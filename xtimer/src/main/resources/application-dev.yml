@@ -13,6 +13,17 @@ spring:
       port: 6379
   main:
     allow-circular-references: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: 123456
+    virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
 
 
 mybatis-plus:
@@ -52,3 +63,8 @@ trigger:
     maxPoolSize: 100
     queueCapacity: 99999
     namePrefix: trigger-
+
+rabbit:
+  exchangeKey: direct.exchange
+  routingKey: direct.route.key
+  queueName: direct.queue

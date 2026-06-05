@@ -16,7 +16,7 @@ public class TaskModel extends BaseModel implements Serializable {
 
     private Long runTimer;
 
-    private int costTime;
+    private Long costTime;
 
     private int status;
 
@@ -60,11 +60,11 @@ public class TaskModel extends BaseModel implements Serializable {
         this.runTimer = runTimer;
     }
 
-    public int getCostTime() {
+    public Long getCostTime() {
         return costTime;
     }
 
-    public void setCostTime(int costTime) {
+    public void setCostTime(Long costTime) {
         this.costTime = costTime;
     }
 
