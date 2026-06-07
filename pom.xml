@@ -20,6 +20,7 @@
 		<module>admin</module>
 		<module>xtimer</module>
 		<module>common</module>
+		<module>msgCenter</module>
 	</modules>
 
 

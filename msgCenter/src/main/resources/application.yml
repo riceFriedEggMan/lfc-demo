@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: msg
+  profiles:
+    active: dev
