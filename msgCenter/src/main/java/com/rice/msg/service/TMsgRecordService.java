@@ -2,6 +2,9 @@ package com.rice.msg.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rice.msg.entity.TMsgRecord;
+import com.rice.msg.entity.TMsgTemplate;
+import com.rice.msg.enums.MsgStatus;
+import com.rice.msg.model.dto.SendMsgReq;
 
 
 /**
@@ -12,4 +15,5 @@ import com.rice.msg.entity.TMsgRecord;
  */
 public interface TMsgRecordService extends IService<TMsgRecord> {
 
+    void createMsgRecord(String msgId, SendMsgReq sendMsgReq, TMsgTemplate tp, MsgStatus msgStatus);
 }

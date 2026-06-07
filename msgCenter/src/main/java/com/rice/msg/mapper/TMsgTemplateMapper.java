@@ -12,4 +12,5 @@ import com.rice.msg.entity.TMsgTemplate;
  */
 public interface TMsgTemplateMapper extends BaseMapper<TMsgTemplate> {
 
+    TMsgTemplate getTemplateById(String templateId);
 }

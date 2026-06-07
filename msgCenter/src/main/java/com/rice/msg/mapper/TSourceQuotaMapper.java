@@ -2,6 +2,7 @@ package com.rice.msg.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.rice.msg.entity.TSourceQuota;
+import com.rice.msg.model.SourceQuotaModel;
 
 
 /**
@@ -12,4 +13,5 @@ import com.rice.msg.entity.TSourceQuota;
  */
 public interface TSourceQuotaMapper extends BaseMapper<TSourceQuota> {
 
+    SourceQuotaModel getSourceQuota(Integer channel, String sourceId);
 }

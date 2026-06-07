@@ -12,4 +12,5 @@ import com.rice.msg.entity.TMsgTemplate;
  */
 public interface TMsgTemplateService extends IService<TMsgTemplate> {
 
+    TMsgTemplate GetTemplateWithCache(String templateId);
 }
