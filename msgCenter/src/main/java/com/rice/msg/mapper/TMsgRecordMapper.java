@@ -12,4 +12,5 @@ import com.rice.msg.entity.TMsgRecord;
  */
 public interface TMsgRecordMapper extends BaseMapper<TMsgRecord> {
 
+    void save(TMsgRecord tMsgRecord);
 }

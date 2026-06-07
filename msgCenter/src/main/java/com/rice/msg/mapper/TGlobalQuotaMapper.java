@@ -2,6 +2,7 @@ package com.rice.msg.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.rice.msg.entity.TGlobalQuota;
+import com.rice.msg.model.GlobalQuotaModel;
 
 
 /**
@@ -12,4 +13,5 @@ import com.rice.msg.entity.TGlobalQuota;
  */
 public interface TGlobalQuotaMapper extends BaseMapper<TGlobalQuota> {
 
+    GlobalQuotaModel getGlobalQuota(Integer channel);
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rice.msg.mapper.TSourceQuotaMapper">
+
+
+    <select id="getSourceQuota" resultType="com.rice.msg.model.SourceQuotaModel">
+        select * from t_source_quota where channel = #{channel} and source_id = #{sourceId}
+    </select>
+</mapper>

@@ -62,6 +62,13 @@ public class ResponseEntity<T> implements Serializable {
         return responseEntity;
     }
 
+    public static <T> ResponseEntity<T> fail() {
+        ResponseEntity<T> responseEntity = new ResponseEntity<>();
+        responseEntity.setCode(ResponseEnum.FAIL.getCode());
+        responseEntity.setMessage(ResponseEnum.FAIL.getMessage());
+        return responseEntity;
+    }
+
     public static <T> ResponseEntity<T> fail(ResponseEnum responseEnum) {
         ResponseEntity<T> responseEntity = new ResponseEntity<>();
         responseEntity.setCode(responseEnum.getCode());
