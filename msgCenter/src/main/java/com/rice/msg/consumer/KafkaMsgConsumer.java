@@ -32,22 +32,22 @@ public class KafkaMsgConsumer {
     @Autowired
     private DealMsgManager dealMsgManager;
 
-    @KafkaListener(topics = "low-topic", groupId = "TEST_GROUP", concurrency = "1", containerFactory = "kafkaManualAckListenerContainerFactory")
+    @KafkaListener(topics = "low-topic", groupId = "TEST_GROUP_low", concurrency = "1", containerFactory = "kafkaManualAckListenerContainerFactory")
     public void consumeLow(ConsumerRecord<?, ?> record, Acknowledgment ack, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
         handleMQMsg(record,ack,topic);
     }
 
-    @KafkaListener(topics = "middle-topic", groupId = "TEST_GROUP", concurrency = "3", containerFactory = "kafkaManualAckListenerContainerFactory")
+    @KafkaListener(topics = "middle-topic", groupId = "TEST_GROUP_middle", concurrency = "3", containerFactory = "kafkaManualAckListenerContainerFactory")
     public void consumeMiddle(ConsumerRecord<?, ?> record, Acknowledgment ack, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
         handleMQMsg(record,ack,topic);
     }
 
-    @KafkaListener(topics = "high-topic", groupId = "TEST_GROUP", concurrency = "6", containerFactory = "kafkaManualAckListenerContainerFactory")
+    @KafkaListener(topics = "high-topic", groupId = "TEST_GROUP_high", concurrency = "6", containerFactory = "kafkaManualAckListenerContainerFactory")
     public void consumeHigh(ConsumerRecord<?, ?> record, Acknowledgment ack, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
         handleMQMsg(record,ack,topic);
     }
 
-    @KafkaListener(topics = "retry-topic", groupId = "TEST_GROUP", concurrency = "1", containerFactory = "kafkaManualAckListenerContainerFactory")
+    @KafkaListener(topics = "retry-topic", groupId = "TEST_GROUP_retry", concurrency = "1", containerFactory = "kafkaManualAckListenerContainerFactory")
     public void consumeRetry(ConsumerRecord<?, ?> record, Acknowledgment ack, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
         handleMQMsg(record,ack,topic);
     }

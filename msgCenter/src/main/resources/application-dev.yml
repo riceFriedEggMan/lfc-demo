@@ -13,10 +13,9 @@ spring:
       port: 6379
   main:
     allow-circular-references: true
-
   kafka:
     #以逗号分隔的主机：端口对列表，用于建立与Kafka的连接
-    bootstrap-servers: 192.168.1.54:9092
+    bootstrap-servers: 172.20.10.6:9092
     producer:
       # 发生错误后，消息重发的次数。
       retries: 0
