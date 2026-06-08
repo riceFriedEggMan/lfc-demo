@@ -26,5 +26,5 @@ public class SendMsgConf {
     private String emailHost;
 
     @Value("${send-msg-conf.email-port}")
-    private int emailPort;
+    private String emailPort;
 }

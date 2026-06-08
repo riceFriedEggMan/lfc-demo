@@ -2,6 +2,7 @@ package com.rice.msg.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.rice.msg.entity.TMsgRecord;
+import com.rice.msg.model.MsgRecordModel;
 
 
 /**
@@ -13,4 +14,10 @@ import com.rice.msg.entity.TMsgRecord;
 public interface TMsgRecordMapper extends BaseMapper<TMsgRecord> {
 
     void save(TMsgRecord tMsgRecord);
+
+    MsgRecordModel getMsgById(String msgId);
+
+    void setStatus(String msgId, int status);
+
+    void incrementRetryCount(String msgId, int num);
 }

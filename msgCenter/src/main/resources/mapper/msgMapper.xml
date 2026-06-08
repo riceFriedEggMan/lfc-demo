@@ -19,4 +19,13 @@
         insert into t_msg_record (`msg_id`,`to`,`subject`,`source_id`,`channel`,`template_id`,`template_data`,`status`,`retry_count`)
         values (#{msgId},#{to},#{subject},#{sourceId},#{channel},#{templateId},#{templateData},#{status},#{retryCount});
     </insert>
+    <update id="setStatus">
+        update t_msg_record set status = #{status} where msg_id = #{msgId}
+    </update>
+    <update id="incrementRetryCount">
+        update t_msg_record set retry_count = #{num} where msg_id = #{msgId}
+    </update>
+    <select id="getMsgById" resultType="com.rice.msg.model.MsgRecordModel">
+        select * from t_msg_record where msg_id = #{msgId}
+    </select>
 </mapper>
