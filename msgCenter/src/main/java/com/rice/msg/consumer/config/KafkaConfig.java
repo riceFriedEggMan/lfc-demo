@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.ssl.SslBundles;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
@@ -23,22 +24,26 @@ public class KafkaConfig {
     private KafkaProperties kafkaProperties;
 
     @Bean
-    public ConsumerFactory<Object, Object> consumerFactory(SslBundles sslBundles) {
+    @Primary
+    public ConsumerFactory<Object, Object> consumerFactory(@Autowired(required = false) SslBundles sslBundles) {
         Map<String, Object> map = kafkaProperties.getConsumer().buildProperties(sslBundles);
+        map.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, String.join(",", kafkaProperties.getBootstrapServers()));
         DefaultKafkaConsumerFactory<Object, Object> factory = new DefaultKafkaConsumerFactory<>(map);
+
         return factory;
     }
 
     @Bean
-    public ConsumerFactory<Object, Object> kafkaManualConsumerFactory(SslBundles sslBundles) {
+    public ConsumerFactory<Object, Object> kafkaManualConsumerFactory(@Autowired(required = false) SslBundles sslBundles) {
         Map<String, Object> map = kafkaProperties.getConsumer().buildProperties(sslBundles);
         map.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
+        map.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, String.join(",", kafkaProperties.getBootstrapServers()));
         DefaultKafkaConsumerFactory<Object, Object> factory = new DefaultKafkaConsumerFactory<>(map);
         return factory;
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, Object>> kafkaManualContainerFactory(SslBundles sslBundles) {
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, Object>> kafkaManualAckListenerContainerFactory(@Autowired(required = false) SslBundles sslBundles) {
         ConcurrentKafkaListenerContainerFactory<Integer, Object> listenerContainerFactory = new ConcurrentKafkaListenerContainerFactory<>();
         listenerContainerFactory.setConsumerFactory(kafkaManualConsumerFactory(sslBundles));
         listenerContainerFactory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
@@ -46,7 +51,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, Object>> batchFactory(SslBundles sslBundles) {
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, Object>> batchFactory(@Autowired(required = false) SslBundles sslBundles) {
         ConcurrentKafkaListenerContainerFactory<Integer, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory(sslBundles));
         factory.setBatchListener(true);
