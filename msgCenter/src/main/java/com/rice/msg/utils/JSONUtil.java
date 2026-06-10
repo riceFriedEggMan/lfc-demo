@@ -2,6 +2,7 @@ package com.rice.msg.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.apache.commons.lang3.StringUtils;
@@ -40,9 +41,9 @@ public class JSONUtil {
         }
         T result = null;
         try {
-            result = mapper.convertValue(json, clazz);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            result = mapper.readValue(json, clazz);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
         return result;
     }

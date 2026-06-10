@@ -17,9 +17,9 @@ import java.util.Properties;
 @Component
 @Slf4j
 public class EmailServiceImpl implements MsgPushService {
+
     @Autowired
     private SendMsgConf sendMsgConf;
-
 
     @Override
     public void pushMsg(ChannelMsgBase channelMsgBase) {
