@@ -28,7 +28,7 @@ public class DealMsgManagerImpl implements DealMsgManager {
 
     @PostConstruct
     public void initChannelStrategyMap() {
-        channelStrategyMap.put(ChannelEnum.Channel_EMAIL.getChannel(), new EmailServiceImpl());
+        channelStrategyMap.put(ChannelEnum.Channel_EMAIL.getChannel(), emailServiceImpl);
     }
 
     @Autowired

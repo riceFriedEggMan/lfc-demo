@@ -1,5 +1,6 @@
 package com.rice.msg.common.conf;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 public class SendMsgConf {
+
     @Value("${send-msg-conf.mysql-as-mq}")
     private boolean mysqlAsMq;
 
