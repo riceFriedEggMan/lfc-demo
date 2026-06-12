@@ -2,6 +2,7 @@ package com.rice.msg.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.rice.msg.entity.TMsgTemplate;
+import org.apache.ibatis.annotations.Param;
 
 
 /**
@@ -13,4 +14,8 @@ import com.rice.msg.entity.TMsgTemplate;
 public interface TMsgTemplateMapper extends BaseMapper<TMsgTemplate> {
 
     TMsgTemplate getTemplateById(String templateId);
+
+    void deleteTemplateById(String templateId);
+
+    int update(@Param("tMsgTemplate") TMsgTemplate tMsgTemplate);
 }

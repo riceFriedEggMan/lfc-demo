@@ -2,6 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rice.msg.mapper.TMsgTemplateMapper">
 
+    <update id="update">
+        update t_msg_template
+        <set>
+            <if test="tMsgTemplate.relTemplateId != null">
+                `rel_template_id` = #{tMsgTemplate.relTemplateId},
+            </if>
+            <if test="tMsgTemplate.name != null">
+                `name` = #{tMsgTemplate.name},
+            </if>
+            <if test="tMsgTemplate.signName != null">
+                `sign_name` = #{tMsgTemplate.signName},
+            </if>
+            <if test="tMsgTemplate.sourceId != null">
+                `source_id` = #{tMsgTemplate.sourceId},
+            </if>
+            <if test="tMsgTemplate.channel != null">
+                `channel` = #{tMsgTemplate.channel},
+            </if>
+            <if test="tMsgTemplate.subject != null">
+                `subject` = #{tMsgTemplate.subject},
+            </if>
+            <if test="tMsgTemplate.content != null">
+                `content` = #{tMsgTemplate.content},
+            </if>
+            <if test="tMsgTemplate.status != null">
+                `status` = #{tMsgTemplate.status}
+            </if>
+        </set>
+        where template_id = #{tMsgTemplate.templateId}
+    </update>
+
+    <delete id="deleteTemplateById">
+        delete from t_msg_template where template_id = #{templateId}
+    </delete>
+
     <select id="getTemplateById" resultType="com.rice.msg.entity.TMsgTemplate">
         select * from t_msg_template where template_id = #{templateId}
     </select>

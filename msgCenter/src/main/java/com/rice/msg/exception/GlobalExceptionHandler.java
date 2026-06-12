@@ -15,8 +15,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.failBusinessException(e.getCode(), e.getMessage());
     }
 
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity handleException(Exception e) {
+        log.error("RuntimeException", e);
         return ResponseEntity.fail();
     }
 }
