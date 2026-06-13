@@ -1,5 +1,6 @@
 package com.rice.msg.redis;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Component
 @Service
 public class TimerMsgCache {
@@ -20,7 +22,7 @@ public class TimerMsgCache {
     }
     public List<String> getOnTimePointsFromCahce() {
         try {
-            List<String> result = executeScript(GetCacheKey(), 0l, System.currentTimeMillis() / 1000);
+            List<String> result = executeScript(GetCacheKey(), 0l, System.currentTimeMillis());
             return result;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -28,12 +30,14 @@ public class TimerMsgCache {
 
     }
 
-    private List<String> executeScript(String key, long l1, long l2) {
-        String script = "local elements = redis.call('ZRANGEBYSCORE', KEYS[1], ARGV[1], ARGV[2])" +
-                "for i, elem in ipairs(elements) do "+
-                "redis.call('ZREM', KEYS[1], elem)" +
-                "end" +
-                "return elements;";
+    private List<String> executeScript(String key, Long l1, Long l2) {
+        String script = """
+                        local elements = redis.call('ZRANGEBYSCORE', KEYS[1], ARGV[1], ARGV[2])
+                        for i, elem in ipairs(elements) do
+                            redis.call('ZREM', KEYS[1], elem)
+                        end
+                        return elements
+                        """;
         return redisTemplate.execute(
                 new DefaultRedisScript<>(script, List.class),
                 Collections.singletonList(key),
@@ -43,6 +47,6 @@ public class TimerMsgCache {
     }
 
     public void cacheSaveMsgTimePoint(Long sendTimestamp) {
-        redisTemplate.opsForZSet().add(GetCacheKey(), sendTimestamp, sendTimestamp);
+        Boolean add = redisTemplate.opsForZSet().add(GetCacheKey(), sendTimestamp, sendTimestamp);
     }
 }

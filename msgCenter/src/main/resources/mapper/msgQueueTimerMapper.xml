@@ -15,7 +15,7 @@
     </update>
 
     <update id="setStatus">
-        update t_msg_tmp_queue_timer set status = #{msgStatus} where msg_id = #{msgId}
+        update t_msg_tmp_queue_timer set status = #{status} where msg_id = #{msgId}
     </update>
 
     <select id="getOnTimeMsgsList" resultType="com.rice.msg.model.MsgQueueTimerModel">

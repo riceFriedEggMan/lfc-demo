@@ -14,8 +14,11 @@ import com.rice.msg.service.TMsgTemplateService;
 import com.rice.msg.tools.RateLimitService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 @Slf4j
@@ -35,7 +38,9 @@ public class SendMsgServiceImpl implements SendMsgService {
     public String sendMsg(SendMsgReq sendMsgReq) {
         // 1.校验发送参数（略)
 
-
+        Date date = DateUtils.addSeconds(new Date(), 10);
+        long time = date.getTime();
+        sendMsgReq.setSendTimestamp(time);
         // 2.查询模板&校验模板状态
         TMsgTemplate tp = tMsgTemplateService.GetTemplateWithCache(sendMsgReq.getTemplateId());
         if (!tp.getStatus().equals(TemplateStatus.TEMPLATE_STATUS_NORMAL.getStatus())){
