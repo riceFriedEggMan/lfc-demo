@@ -61,6 +61,7 @@ public class SendMsgServiceImpl implements SendMsgService {
         String msgId = null;
         if (sendMsgConf.isMysqlAsMq()){
             msgId = sendMsgManager.sendToMysql(sendMsgReq);
+            tMsgRecordService.createOrUpdateMsgRecord(sendMsgReq.getMsgId(), sendMsgReq, tp, MsgStatus.Processing);
         }else{
             // msgId = sendMsgManager.sendToMq(sendMsgReq);
         }
