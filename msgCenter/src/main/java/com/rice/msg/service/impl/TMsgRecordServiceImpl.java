@@ -13,6 +13,7 @@ import com.rice.msg.model.dto.SendMsgReq;
 import com.rice.msg.service.TMsgRecordService;
 import com.rice.msg.utils.JSONUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ public class TMsgRecordServiceImpl extends ServiceImpl<TMsgRecordMapper, TMsgRec
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private SendMsgConf sendMsgConf;
+    @Autowired
+    private TMsgRecordMapper tMsgRecordMapper;
 
     @Override
     public void createMsgRecord(String msgId, SendMsgReq sendMsgReq, TMsgTemplate tp, MsgStatus msgStatus) {
@@ -68,5 +71,37 @@ public class TMsgRecordServiceImpl extends ServiceImpl<TMsgRecordMapper, TMsgRec
         redisTemplate.opsForValue().set(key, JSONUtil.toJsonString(msgRecordModel), Duration.ofSeconds(30));
 
         return ResponseEntity.ok(msgRecordModel);
+    }
+
+    @Override
+    public void createOrUpdateMsgRecord(String msgId, SendMsgReq sendMsgReq, TMsgTemplate tp, MsgStatus msgStatus) {
+        MsgRecordModel msg = tMsgRecordMapper.getMsgById(msgId);
+        if (msg == null) {
+            msg = new MsgRecordModel();
+            msg.setMsgId(msgId);
+            msg.setTo(sendMsgReq.getTo());
+            msg.setSubject(sendMsgReq.getSubject());
+            msg.setTemplateId(sendMsgReq.getTemplateId());
+            msg.setTemplateData(JSONUtil.toJsonString(sendMsgReq.getTemplateData()));
+            msg.setMsgId(sendMsgReq.getMsgId());
+            msg.setSourceId(tp.getSourceId());
+            msg.setChannel(tp.getChannel());
+            msg.setStatus(msgStatus.getStatus());
+            TMsgRecord tMsgRecord = new TMsgRecord();
+            BeanUtils.copyProperties(msg, tMsgRecord);
+            try {
+                tMsgRecordMapper.save(tMsgRecord);
+            } catch (Exception e) {
+                log.error("存储消息失败");
+            }
+        }else{
+            try {
+                tMsgRecordMapper.setStatus(msgId, msgStatus.getStatus());
+            } catch (Exception e) {
+                log.error("更新消息失败");
+            }
+        }
+
+
     }
 }

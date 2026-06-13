@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rice.msg.mapper.TMsgQueueMapper">
+    <insert id="sava">
+        insert into ${tableName} (`msg_id`,`to`,`subject`,`priority`,`channel`,`template_id`,`template_data`,`status`)
+        values (#{tMsgQueue.msgId},#{tMsgQueue.to},#{tMsgQueue.subject},#{tMsgQueue.priority},#{tMsgQueue.channel},#{tMsgQueue.templateId},#{tMsgQueue.templateData},#{tMsgQueue.status});
+    </insert>
+    <update id="batchSetStatus">
+        update ${tableName} set status = #{status}
+        where msg_id in
+        <foreach collection="msgIdList" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </update>
+    <update id="setStatus">
+        update ${tableName} set status = #{msgStatus} where msg_id = #{msgId}
+    </update>
+
+    <select id="getMsgByStatus" resultType="com.rice.msg.entity.TMsgQueue">
+        select * from ${tableName} where status = #{msgStatus} limit #{batch}
+    </select>
+    <select id="getMsgById" resultType="com.rice.msg.entity.TMsgQueue">
+        select * from ${tableName} where msg_id = #{msgId}
+    </select>
+</mapper>

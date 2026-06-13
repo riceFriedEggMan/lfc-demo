@@ -50,7 +50,7 @@ public class DealMsgManagerImpl implements DealMsgManager {
         msgPushService.pushMsg(channelMsgBase);
 
         try{
-            tMsgRecordService.createMsgRecord(sendMsgReq.getMsgId(), sendMsgReq, tp, MsgStatus.Success);
+            tMsgRecordService.createOrUpdateMsgRecord(sendMsgReq.getMsgId(), sendMsgReq, tp, MsgStatus.Success);
         }catch (Exception e){
             log.error("存储消息发送记录失败， msgId", sendMsgReq.getMsgId());
         }

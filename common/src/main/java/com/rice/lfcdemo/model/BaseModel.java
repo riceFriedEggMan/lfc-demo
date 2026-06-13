@@ -8,9 +8,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class BaseModel implements Serializable {
-    @TableField(fill = FieldFill.INSERT)
+
     protected Date createTime;
-    @TableField(fill = FieldFill.UPDATE)
+
     protected Date modifyTime;
 
     public Date getCreateTime() {
