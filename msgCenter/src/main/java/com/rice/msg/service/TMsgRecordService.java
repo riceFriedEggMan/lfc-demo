@@ -19,4 +19,6 @@ public interface TMsgRecordService extends IService<TMsgRecord> {
     void createMsgRecord(String msgId, SendMsgReq sendMsgReq, TMsgTemplate tp, MsgStatus msgStatus);
 
     ResponseEntity getMessageById(String msgId);
+
+    void createOrUpdateMsgRecord(String msgId, SendMsgReq sendMsgReq, TMsgTemplate tp, MsgStatus msgStatus);
 }

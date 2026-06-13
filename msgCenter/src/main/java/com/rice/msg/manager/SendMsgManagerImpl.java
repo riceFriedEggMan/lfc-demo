@@ -1,7 +1,11 @@
 package com.rice.msg.manager;
 
 import com.rice.msg.constant.Constants;
+import com.rice.msg.entity.TMsgQueue;
+import com.rice.msg.entity.TMsgRecord;
+import com.rice.msg.enums.MsgStatus;
 import com.rice.msg.enums.PriorityEnum;
+import com.rice.msg.mapper.TMsgQueueMapper;
 import com.rice.msg.model.dto.SendMsgReq;
 import com.rice.msg.utils.JSONUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +19,8 @@ import java.util.UUID;
 public class SendMsgManagerImpl implements SendMsgManager{
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
+    @Autowired
+    private TMsgQueueMapper tMsgQueueMapper;
 
     @Override
     public String SendToTimer(SendMsgReq sendMsgReq) {
@@ -38,6 +44,21 @@ public class SendMsgManagerImpl implements SendMsgManager{
 
     @Override
     public String sendToMysql(SendMsgReq sendMsgReq) {
-        return "";
+        if (StringUtils.isBlank(sendMsgReq.getMsgId())) {
+            sendMsgReq.setMsgId(UUID.randomUUID().toString());
+        }
+        TMsgQueue tMsgQueue = new TMsgQueue();
+        tMsgQueue.setMsgId(sendMsgReq.getMsgId());
+        tMsgQueue.setTo(sendMsgReq.getTo());
+        tMsgQueue.setSubject(sendMsgReq.getSubject());
+        tMsgQueue.setTemplateId(sendMsgReq.getTemplateId());
+        tMsgQueue.setTemplateData(JSONUtil.toJsonString(sendMsgReq.getTemplateData()));
+        tMsgQueue.setStatus(MsgStatus.Pending.getStatus());
+
+        String tableName = Constants.TableNamePre_MsgQueue + PriorityEnum.GetPriorityStr(sendMsgReq.getPriority());
+
+        tMsgQueueMapper.sava(tableName, tMsgQueue);
+
+        return sendMsgReq.getMsgId();
     }
 }
