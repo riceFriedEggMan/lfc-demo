@@ -73,6 +73,7 @@ public class SendMsgManagerImpl implements SendMsgManager{
         tMsgQueue.setSubject(sendMsgReq.getSubject());
         tMsgQueue.setTemplateId(sendMsgReq.getTemplateId());
         tMsgQueue.setTemplateData(JSONUtil.toJsonString(sendMsgReq.getTemplateData()));
+        tMsgQueue.setPriority(sendMsgReq.getPriority());
         tMsgQueue.setStatus(MsgStatus.Pending.getStatus());
 
         String tableName = Constants.TableNamePre_MsgQueue + PriorityEnum.GetPriorityStr(sendMsgReq.getPriority());

@@ -75,6 +75,7 @@ public class TimerMsgResendPollTask {
                 }else{
                     sendMsgManager.sendToMq(sendMsgReq);
                 }
+                return true;
             } catch (InterruptedException e) {
                 throw new RuntimeException("发送被中断", e);
             } catch (Exception e) {

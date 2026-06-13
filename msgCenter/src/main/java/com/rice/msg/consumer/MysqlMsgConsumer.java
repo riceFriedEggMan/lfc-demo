@@ -39,7 +39,7 @@ public class MysqlMsgConsumer {
     private MysqlMsgPollTask mysqlMsgPollTask;
 
     // 定时消费不同优先级的消息
-    @Scheduled(fixedRate = 1000)
+    //@Scheduled(fixedRate = 1000)
     public void consume() {
         consumeMySQLMsgWithLeaderCheck(PriorityEnum.PRIORITY_LOW, 10);
         consumeMySQLMsgWithLeaderCheck(PriorityEnum.PRIORITY_LOW, 20);

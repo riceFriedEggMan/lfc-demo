@@ -1,6 +1,7 @@
 package com.rice.msg.consumer;
 
 import com.rice.lfcdemo.redis.ReentrantDistributeLock;
+import com.rice.msg.consumer.poll.TimerMsgResendPollTask;
 import com.rice.msg.enums.MsgStatus;
 import com.rice.msg.mapper.MsgQueueTimerMapper;
 import com.rice.msg.model.MsgQueueTimerModel;
@@ -25,6 +26,8 @@ public class TimerMsgConsumer {
     private TimerMsgCache timerMsgCache;
     @Autowired
     private MsgQueueTimerMapper msgQueueTimerMapper;
+    @Autowired
+    private TimerMsgResendPollTask timerMsgResendPollTask;
 
     private boolean isLeader = false;
 
@@ -73,7 +76,7 @@ public class TimerMsgConsumer {
 
         for (MsgQueueTimerModel msgQueueTimerModel : msgQueueTimerModels){
             // 多线程异步处理
-
+            timerMsgResendPollTask.asyncHandleMsg(msgQueueTimerModel.getReq());
         }
 
 
