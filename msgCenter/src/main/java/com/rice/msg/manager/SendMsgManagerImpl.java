@@ -5,8 +5,11 @@ import com.rice.msg.entity.TMsgQueue;
 import com.rice.msg.entity.TMsgRecord;
 import com.rice.msg.enums.MsgStatus;
 import com.rice.msg.enums.PriorityEnum;
+import com.rice.msg.mapper.MsgQueueTimerMapper;
 import com.rice.msg.mapper.TMsgQueueMapper;
+import com.rice.msg.model.MsgQueueTimerModel;
 import com.rice.msg.model.dto.SendMsgReq;
+import com.rice.msg.redis.TimerMsgCache;
 import com.rice.msg.utils.JSONUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +24,27 @@ public class SendMsgManagerImpl implements SendMsgManager{
     private KafkaTemplate<String, Object> kafkaTemplate;
     @Autowired
     private TMsgQueueMapper tMsgQueueMapper;
+    @Autowired
+    private MsgQueueTimerMapper msgQueueTimerMapper;
+    @Autowired
+    private TimerMsgCache timerMsgCache;
 
     @Override
     public String SendToTimer(SendMsgReq sendMsgReq) {
-        return "";
+        String uuid = UUID.randomUUID().toString();
+        sendMsgReq.setMsgId(uuid);
+        String reqStr = JSONUtil.toJsonString(sendMsgReq);
+        MsgQueueTimerModel msgQueueTimerModel = new MsgQueueTimerModel();
+        msgQueueTimerModel.setMsgId(uuid);
+        msgQueueTimerModel.setReq(reqStr);
+        msgQueueTimerModel.setSendTimestamp(sendMsgReq.getSendTimestamp());
+        msgQueueTimerModel.setStatus(MsgStatus.Pending.getStatus());
+
+        msgQueueTimerMapper.save(msgQueueTimerModel);
+
+        timerMsgCache.cacheSaveMsgTimePoint(msgQueueTimerModel.getSendTimestamp());
+
+        return uuid;
     }
 
     @Override

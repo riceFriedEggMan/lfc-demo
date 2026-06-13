@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rice.msg.mapper.MsgQueueTimerMapper">
+    <insert id="save">
+        insert into t_msg_tmp_queue_timer (`msg_id`,`req`,`send_timestamp`,`status`)
+        values (#{msgQueueTimerModel.msgId},#{msgQueueTimerModel.req},#{msgQueueTimerModel.sendTimestamp},#{msgQueueTimerModel.status})
+    </insert>
+
+    <update id="batchSetStatus">
+        update t_msg_tmp_queue_timer set status = #{status}
+        where msg_id in
+        <foreach collection="msgIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="setStatus">
+        update t_msg_tmp_queue_timer set status = #{msgStatus} where msg_id = #{msgId}
+    </update>
+
+    <select id="getOnTimeMsgsList" resultType="com.rice.msg.model.MsgQueueTimerModel">
+        select * from t_msg_tmp_queue_timer where status = #{status} and send_timestamp <![CDATA[<=]]> #{time}
+    </select>
+
+</mapper>
