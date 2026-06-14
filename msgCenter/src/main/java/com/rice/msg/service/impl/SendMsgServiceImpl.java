@@ -52,8 +52,8 @@ public class SendMsgServiceImpl implements SendMsgService {
         if (sendMsgReq.getSendTimestamp() != null) {
             isTimerMsg = true;
         }
-        boolean allow = true;
-//        boolean allow = rateLimitService.isRequestAllowed(tp.getSourceId(), tp.getChannel(), isTimerMsg);
+
+        boolean allow = rateLimitService.isRequestAllowed(tp.getSourceId(), tp.getChannel(), isTimerMsg);
         if (!allow) {
             log.warn("请求频繁，限流");
             throw new BusinessException(ErrorCode.RateLimit_ERROR, "请求频繁，限流");

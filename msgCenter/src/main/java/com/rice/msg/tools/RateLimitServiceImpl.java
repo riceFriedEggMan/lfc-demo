@@ -46,7 +46,7 @@ public class RateLimitServiceImpl implements RateLimitService {
         String keyId = String.format(Constants.REDIS_KEY_RATE_LIMIT_COUNT + ":%s:%d", sourceId, channel);
         if (isTimerMsg){
             // 定时消息需要用到的key
-            keyId = "";
+            keyId = String.format(Constants.REDIS_KEY_RATE_LIMIT_COUNT_TIMER + ":%s:%d", sourceId, channel);
         }
 
         return checkAllowed(keyId, numLimit, unit);
