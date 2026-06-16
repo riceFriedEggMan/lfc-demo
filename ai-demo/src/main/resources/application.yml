@@ -4,7 +4,7 @@ server:
 spring:
   ai:
     zhipuai:
-      api-key: ${ZHIPU_KEY}  # 配置 API Key
+      api-key: "0ded7b94d4e3470a938685cfade1fc10.73OIOnuY6gsqPG14"  # 配置 API Key
       base-url: "https://open.bigmodel.cn/api/paas"   # 配置 模型地址
       chat:
         options:
