@@ -21,7 +21,8 @@
 		<module>xtimer</module>
 		<module>common</module>
 		<module>msgCenter</module>
-	</modules>
+        <module>ai-demo</module>
+    </modules>
 
 
     <properties>
