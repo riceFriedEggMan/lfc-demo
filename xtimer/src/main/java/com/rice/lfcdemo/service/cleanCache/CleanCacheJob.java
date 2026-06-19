@@ -1,4 +1,4 @@
-package com.rice.lfcdemo.service.CleanCache;
+package com.rice.lfcdemo.service.cleanCache;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Component
 @Slf4j
