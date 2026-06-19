@@ -29,7 +29,7 @@ public class CoffeeController {
 
     private final ChatClient chatClient;
 
-    public CoffeeController(VectorStore vectorStore, ChatClient.Builder chatClientBuilder) {
+    public CoffeeController(VectorStore vectorStore, ChatClient.Builder chatClientBuilder, ToolCallbackProvider toolCallbackProvider) {
         this.vectorStore = vectorStore;
         VectorStoreDocumentRetriever vectorStoreDocumentRetriever = VectorStoreDocumentRetriever.builder()
                 .vectorStore(vectorStore)
@@ -41,9 +41,10 @@ public class CoffeeController {
                 .build();
         this.chatClient  = chatClientBuilder
                 .defaultAdvisors(retrievalAugmentationAdvisor, new MemoryAdvisor())
-                .defaultTools(new TimeTools())
-                //.defaultToolCallbacks(toolCallbackProvider.getToolCallbacks())
+//                .defaultTools(toolCallbackProvider.getToolCallbacks())
+                .defaultToolCallbacks(toolCallbackProvider.getToolCallbacks())
                 .build();
+        System.out.println(1);
     }
 
     @GetMapping("/import")

@@ -14,6 +14,12 @@ spring:
           model: embedding-3
           dimensions: 256
 
+    mcp:
+      client:
+        sse:
+          connections:
+            server:
+              url: http://localhost:8080
 
     vectorstore:
       redis:

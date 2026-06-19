@@ -1,0 +1,16 @@
+#server:
+#  port: 8080
+#
+#spring:
+#  application:
+#    name: mcp-server
+#
+#  ai:
+#    mcp:
+#      server:
+#        protocol: SSE
+#        name: my-mcp-server
+#        version: 1.0.0
+#        # SSE 相关配置
+#        sse:
+#          endpoint: /sse
