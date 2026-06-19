@@ -3,22 +3,25 @@ package com.rice.aidemo.controller;
 import com.rice.aidemo.advisor.MemoryAdvisor;
 import com.rice.aidemo.advisor.TestAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.zhipuai.ZhiPuAiChatOptions;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/zhipuai")
 public class ZhipuChatController {
-    private final ChatModel chatModel;
     private final ChatClient chatClient;
 
     public ZhipuChatController(ChatModel chatModel) {
         this.chatClient = ChatClient.builder(chatModel).build();
-        this.chatModel = chatModel;
     }
 
     @GetMapping("/simple")
@@ -32,12 +35,14 @@ public class ZhipuChatController {
         //return chatModel.call(query);
     }
 
-    @GetMapping("memoryChat")
+    @GetMapping("/memoryChat")
     public String memoryChat(@RequestParam(name = "id")  String id, @RequestParam(name = "query") String query) {
+
         return chatClient.prompt()
                 .user(query)
                 .advisors(advisorSpec -> advisorSpec.param("id", id))
                 .advisors(new MemoryAdvisor())
                 .call().content();
     }
+
 }

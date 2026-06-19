@@ -9,3 +9,25 @@ spring:
       chat:
         options:
           model: glm-4.5
+      embedding:
+        options:
+          model: embedding-3
+          dimensions: 256
+
+
+    vectorstore:
+      redis:
+        initialize-schema: true  # 启动时自动创建Redis向量索引结构（首次部署需开启）
+        prefix: rag_prefix  # Redis键名前缀，用于区分不同应用的向量数据
+        index: rag_index  # Redis向量索引名称
+        dimensions: 256
+
+  data:
+    redis:
+      host: 172.20.10.6 # Redis服务器地址
+      port: 6380  # Redis服务器连接端口（默认6379）
+  datasource:
+    url: jdbc:mysql://localhost:3306/lfcpj?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
