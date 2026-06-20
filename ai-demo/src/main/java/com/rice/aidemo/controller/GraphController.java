@@ -16,14 +16,35 @@ import java.util.Optional;
 public class GraphController {
 
     private final CompiledGraph simpleGraph;
+    private final CompiledGraph jokeGraph;
+    private final CompiledGraph loopGraph;
 
-    public GraphController(@Qualifier("simpleGraph") CompiledGraph simpleGraph) {
+
+    public GraphController(@Qualifier("simpleGraph") CompiledGraph simpleGraph,
+                           @Qualifier("jokeGraph") CompiledGraph jokeGraph,
+                           @Qualifier("loopGraph") CompiledGraph loopGraph) {
         this.simpleGraph = simpleGraph;
+        this.jokeGraph = jokeGraph;
+        this.loopGraph = loopGraph;
     }
 
     @GetMapping("/simpleGraph")
     public Map<String, Object> simpleGraph(@RequestParam String params) {
         Optional<OverAllState> state = simpleGraph.call(Map.of("word", params));
+        Map<String, Object> res = state.map(OverAllState::data).orElse(Map.of());
+        return res;
+    }
+
+    @GetMapping("/jokeGraph")
+    public Map<String, Object> jokeGraph(@RequestParam String params) {
+        Optional<OverAllState> state = jokeGraph.call(Map.of("topic", params));
+        Map<String, Object> res = state.map(OverAllState::data).orElse(Map.of());
+        return res;
+    }
+
+    @GetMapping("/loopGraph")
+    public Map<String, Object> loopGraph(@RequestParam String params) {
+        Optional<OverAllState> state = loopGraph.call(Map.of("topic", params));
         Map<String, Object> res = state.map(OverAllState::data).orElse(Map.of());
         return res;
     }
